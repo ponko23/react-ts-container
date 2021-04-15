@@ -12,14 +12,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: /bin/sh -c "while sleep 1000; do :; done"
-    expose:
-      - "3000"
-    ports:
-      - "3000:3000"
-    networks:
-      - app-test
-    links:
-      - react-ts-api
+    network_mode: "host"
 
   react-ts-api:
     build:
@@ -29,19 +22,14 @@ services:
       - ./react-ts-api:/usr/app
       - nodemodules2:/usr/app/node_modules
     command: "yarn start"
-    expose:
-      - "3001"
-    ports:
-      - "3001:3001"
-    networks:
-      - app-test
-  
+    network_mode: "host"
+
 volumes:
     nodemodules1:
       driver: "local"
     nodemodules2:
       driver: "local"
 
-networks:
-  app-test:
-      driver: bridge
+# networks:
+#   app-test:
+#       driver: bridge
